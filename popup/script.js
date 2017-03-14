@@ -1,11 +1,25 @@
 let options;
 
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    console.log(request.result)
+    if(request.result) {
+        handleResult(request.result);
+    }
+});
+
 function initialiseOptions() {
     const defaultOptions = {
         includeBorderColorsWithZeroWidth: false,
         props: ["background-color", "color", "border-top-color", "border-right-color", "border-bottom-color", "border-left-color"],
         skipColors: { "rgb(0, 0, 0)": 1, "rgba(0, 0, 0, 0)": 1, "rgb(255, 255, 255)": 1 }
     }
+
+
+    //chrome.storage.local.set({ 'keywords': 'test' });
+
+
+    
+
 
     options = localStorage.getItem('allColors_options') ? JSON.parse(localStorage.getItem('allColors_options')) : defaultOptions;
 
@@ -37,7 +51,7 @@ function setOptions() {
     let skipColorsArry = Array.from(document.getElementById('skipColors-list').getElementsByTagName('li'));
     let skipColors = new Object();
 
-    options.props = propsArry.map(function(prop) {
+    options.props = propsArry.map(function (prop) {
         return prop.innerHTML;
     });
 
@@ -82,11 +96,21 @@ function execAllColor() {
     chrome.tabs.executeScript({ code: code });
 }
 
+function handleResult(res) {
+    
+}
+
 initialiseOptions();
 
 document.getElementById('trigger').addEventListener('click', function () {
     setOptions();
-    execAllColor();
+    //execAllColor();
+
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, { settings: options }, function (response) {
+            
+        });
+    });
 })
 
 document.getElementById('reset').addEventListener('click', function () {

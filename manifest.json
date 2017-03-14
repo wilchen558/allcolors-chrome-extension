@@ -17,6 +17,17 @@
     "https://ajax.googleapis.com/"
   ],
 
+  "content_scripts": [
+        {
+        "matches": [
+            "http://*/*",
+            "https://*/*"
+            ],
+        "js": ["all-colors/allcolors.js"],
+        "run_at": "document_end"         // pay attention to this line
+        }
+  ],
+
   "web_accessible_resources": [
     "all-colors/allcolors.js"
   ]
