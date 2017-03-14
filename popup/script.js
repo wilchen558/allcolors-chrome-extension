@@ -24,6 +24,7 @@ function initialiseOptions() {
         let div = document.createElement("div");
 
         li.appendChild(document.createTextNode(element));
+        li.dataset.color = element;
         div.className = "color-block";
         div.style.backgroundColor = element;
         li.appendChild(div);
@@ -32,9 +33,22 @@ function initialiseOptions() {
 }
 
 function setOptions() {
-    //options.props = get all props
-    //options.skipColors = get all colors
+    let propsArry = Array.from(document.getElementById('props-list').getElementsByTagName('li'));
+    let skipColorsArry = Array.from(document.getElementById('skipColors-list').getElementsByTagName('li'));
+    let skipColors = new Object();
+
+    options.props = props.map(function(prop) {
+        return prop.innerHTML;
+    });
+
+    skipColorsArry.forEach(function (element) {
+        skipColors[element.dataset.color] = 1;
+    });
+
+    options.skipColors = skipColors;
+
     options.includeBorderColorsWithZeroWidth = document.getElementById('includeZeroBorders').checked;
+
     localStorage.setItem('allColors_options', JSON.stringify(options));
 }
 
