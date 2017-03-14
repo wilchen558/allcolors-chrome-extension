@@ -37,7 +37,7 @@ function setOptions() {
     let skipColorsArry = Array.from(document.getElementById('skipColors-list').getElementsByTagName('li'));
     let skipColors = new Object();
 
-    options.props = props.map(function(prop) {
+    options.props = propsArry.map(function(prop) {
         return prop.innerHTML;
     });
 
