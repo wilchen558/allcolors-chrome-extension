@@ -14,15 +14,16 @@ chrome.runtime.onMessage.addListener(
 
 function execAllCorlors(settings) {
 
-    var allColors = {};
-    var includeBorderColorsWithZeroWidth = settings.includeBorderColorsWithZeroWidth;
-    var props = settings.props;
-    var skipColors = settings.skipColors;
+    let allColors = {};
+    let logToConsole = settings.logToConsole;
+    let includeBorderColorsWithZeroWidth = settings.includeBorderColorsWithZeroWidth;
+    let props = settings.props;
+    let skipColors = settings.skipColors;
 
     [].forEach.call(document.querySelectorAll("*"), function (node) {
-        var nodeColors = {};
+        let nodeColors = {};
         props.forEach(function (prop) {
-            var color = window.getComputedStyle(node, null).getPropertyValue(prop),
+            let color = window.getComputedStyle(node, null).getPropertyValue(prop),
                 thisIsABorderProperty = (prop.indexOf("border") != -1),
                 notBorderZero = thisIsABorderProperty ? window.getComputedStyle(node, null).getPropertyValue(prop.replace("color", "width")) !== "0px" : true,
                 colorConditionsMet;
@@ -58,21 +59,21 @@ function execAllCorlors(settings) {
     }
 
     function componentToHex(c) {
-        var hex = c.toString(16);
+        let hex = c.toString(16);
         return hex.length == 1 ? "0" + hex : hex;
     }
 
     function rgbToHex(rgbArray) {
-        var r = rgbArray[0],
+        let r = rgbArray[0],
             g = rgbArray[1],
             b = rgbArray[2];
         return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
     }
 
-    var allColorsSorted = [];
-    for (var i in allColors) {
-        var rgbArray = rgbTextToRgbArray(i);
-        var hexValue = rgbToHex(rgbArray);
+    let allColorsSorted = [];
+    for (let i in allColors) {
+        let rgbArray = rgbTextToRgbArray(i);
+        let hexValue = rgbToHex(rgbArray);
 
         allColorsSorted.push({
             key: i,
@@ -85,28 +86,29 @@ function execAllCorlors(settings) {
         return b.value.count - a.value.count;
     });
 
-    var nameStyle = "font-weight:normal;";
-    var countStyle = "font-weight:bold;";
+    let nameStyle = "font-weight:normal;";
+    let countStyle = "font-weight:bold;";
     function colorStyle(color) {
         return "background:" + color + ";color:" + color + ";border:1px solid #333;";
     };
 
-    console.group("Total colors used in elements on the page: " + window.location.href + " are " + allColorsSorted.length);
-    allColorsSorted.forEach(function (c) {
-        console.groupCollapsed("%c    %c " + c.key + " " + c.hexValue + " %c(" + c.value.count + " times)",
-            colorStyle(c.key), nameStyle, countStyle);
-        c.value.nodes.forEach(function (node) {
-            console.log(node);
+    if (logToConsole) {
+        console.group("Total colors used in elements on the page: " + window.location.href + " are " + allColorsSorted.length);
+        allColorsSorted.forEach(function (c) {
+            console.groupCollapsed("%c    %c " + c.key + " " + c.hexValue + " %c(" + c.value.count + " times)",
+                colorStyle(c.key), nameStyle, countStyle);
+            c.value.nodes.forEach(function (node) {
+                console.log(node);
+            });
+            console.groupEnd();
         });
-        console.groupEnd();
-    });
-    console.groupEnd("All colors used in elements on the page");
+        console.groupEnd("All colors used in elements on the page");
+    }
 
     returnResult(allColorsSorted);
 
 }
 
-function returnResult(res) {
-    chrome.runtime.sendMessage({ result: res });
-    console.log('result returned');
+function returnResult(result) {
+    chrome.runtime.sendMessage({ result: result });
 }
