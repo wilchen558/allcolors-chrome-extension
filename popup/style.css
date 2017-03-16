@@ -44,7 +44,7 @@ a {
  */
 
 body {
-	width: 250px;
+	width: 500px;
 	background: rgb(245,245,245);
 }
 
@@ -147,12 +147,19 @@ button#reset {
 }
 
 .color-block {
-    width: 10px;
-    height: 10px;
+    width: 30px;
+    height: 15px;
     display: inline-block;
     border: 1px solid black;
     vertical-align: middle;
-    margin-left: 5px;
+    margin-right: 5px;
+}
+ul {
+	list-style: none;
+}
+
+li p {
+	display: inline-block;
 }
 
 
