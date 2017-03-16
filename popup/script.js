@@ -1,28 +1,22 @@
 let options;
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    console.log(request.result)
-    if(request.result) {
+    if (request.result) {
         handleResult(request.result);
     }
 });
 
 function initialiseOptions() {
     const defaultOptions = {
+        logToConsole: false,
         includeBorderColorsWithZeroWidth: false,
         props: ["background-color", "color", "border-top-color", "border-right-color", "border-bottom-color", "border-left-color"],
         skipColors: { "rgb(0, 0, 0)": 1, "rgba(0, 0, 0, 0)": 1, "rgb(255, 255, 255)": 1 }
     }
 
-
-    //chrome.storage.local.set({ 'keywords': 'test' });
-
-
-    
-
-
     options = localStorage.getItem('allColors_options') ? JSON.parse(localStorage.getItem('allColors_options')) : defaultOptions;
 
+    document.getElementById('logToConsole').checked = options.logToConsole;
     document.getElementById('includeZeroBorders').checked = options.includeBorderColorsWithZeroWidth;
 
     options.props.forEach(function (element) {
@@ -37,11 +31,12 @@ function initialiseOptions() {
         let li = document.createElement("li");
         let div = document.createElement("div");
 
-        li.appendChild(document.createTextNode(element));
         li.dataset.color = element;
         div.className = "color-block";
         div.style.backgroundColor = element;
         li.appendChild(div);
+        li.appendChild(document.createTextNode(element));
+
         ul.appendChild(li);
     });
 }
@@ -62,6 +57,8 @@ function setOptions() {
     options.skipColors = skipColors;
 
     options.includeBorderColorsWithZeroWidth = document.getElementById('includeZeroBorders').checked;
+
+    options.logToConsole = document.getElementById('logToConsole').checked;
 
     localStorage.setItem('allColors_options', JSON.stringify(options));
 }
@@ -97,18 +94,40 @@ function execAllColor() {
 }
 
 function handleResult(res) {
+
+    let ul = document.getElementById("result-list");
+
+    res.forEach(function (c) {
+        let li = document.createElement("li");
+        let div = document.createElement("div");
+        let p = document.createElement("p");
+
+        div.className = "color-block";
+        div.style.backgroundColor = c.key;
+        p.innerHTML = c.key + " " + c.hexValue + " <b>(" + c.value.count + " Times)</b>";
+
+        li.appendChild(div);
+        li.appendChild(p);
+        ul.appendChild(li);
+    });
+
+}
+
+function addProperty() {
     
+}
+
+function addSkipColor() {
+
 }
 
 initialiseOptions();
 
 document.getElementById('trigger').addEventListener('click', function () {
     setOptions();
-    //execAllColor();
-
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         chrome.tabs.sendMessage(tabs[0].id, { settings: options }, function (response) {
-            
+
         });
     });
 })
