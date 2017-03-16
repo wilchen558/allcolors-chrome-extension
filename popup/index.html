@@ -13,17 +13,27 @@
     <form>
         <div class="input-group">
             <label for="includeZeroBorders">Include zero width borders</label>
-            <input type="checkbox" name="includeZeroBorders" id="includeZeroBorders"/>
+            <input type="checkbox" name="includeZeroBorders" id="includeZeroBorders" />
         </div>
         <div class="input-group">
             <label for="props">CSS Properties</label>
             <ul id="props-list"></ul>
-            <input type="text" name="props" id="props"/>
+            <div>
+                <input type="text" name="props" id="props" />
+                <button id="reset" type="button">Add</button>
+            </div>
         </div>
         <div class="input-group">
             <label for="skipColors">Skip Colors <small>(use rbg)</small></label>
             <ul id="skipColors-list"></ul>
-            <input type="text" name="skipColors" id="skipColors"/>
+            <div>
+                <input type="text" name="skipColors" id="skipColors" />
+                <button id="reset" type="button">Add</button>
+            </div>
+        </div>
+        <div class="input-group">
+            <label for="logToConsole">Log result to console</label>
+            <input type="checkbox" name="logToConsole" id="logToConsole" />
         </div>
         <div class="button-group">
             <button id="trigger" type="button">
@@ -38,8 +48,12 @@
         </div>
     </form>
 
+    <ul id="result-list">
+
+    </ul>
+
     <footer>
-        Based on <a href="https://github.com/bgrins/devtools-snippets/blob/master/snippets/allcolors/allcolors.js" target="_blank">bgrins allcolors.js</a> snippet
+        Based on <a href="https://github.com/bgrins/devtools-snippets/blob/master/snippets/allcolors/allcolors.js" target="_blank">bgrins allcolors.js</a>        snippet
     </footer>
 
     <script src="script.js"></script>
