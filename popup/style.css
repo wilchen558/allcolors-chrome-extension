@@ -56,11 +56,15 @@ footer {
 }
 
 header {
-	background: #ffce00;
+	color: white;
 	padding: 10px;
 	text-align: center;
 	font-size: 1.5rem;
 	font-weight: 600;
+	background: #e96443; /* fallback for old browsers */
+	background: -webkit-linear-gradient(to left, #e96443 , #904e95); /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to left, #e96443 , #904e95); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        
 }
 
 footer {
@@ -83,7 +87,7 @@ footer {
 label {
 	display: block;
 	margin-bottom: 5px;
-	font-size: 1.2rem;
+	font-size: 1.4rem;
 	font-weight: 600;
 }
 
@@ -126,6 +130,9 @@ input {
 	font-size: 1.4rem;
     border: 0;
     border-radius: 3px;
+	display: inline-block;
+	width: 67%;
+	margin-right: 10px;
 }
 
 
