@@ -12,15 +12,11 @@
 
     <form>
         <div class="input-group">
-            <label for="includeZeroBorders">Include zero width borders</label>
-            <input type="checkbox" name="includeZeroBorders" id="includeZeroBorders" />
-        </div>
-        <div class="input-group">
             <label for="props">CSS Properties</label>
             <ul id="props-list"></ul>
             <div>
                 <input type="text" name="props" id="props" />
-                <button id="reset" type="button">Add</button>
+                <button id="add-property" type="button">Add</button>
             </div>
         </div>
         <div class="input-group">
@@ -28,11 +24,15 @@
             <ul id="skipColors-list"></ul>
             <div>
                 <input type="text" name="skipColors" id="skipColors" />
-                <button id="reset" type="button">Add</button>
+                <button id="add-color" type="button">Add</button>
             </div>
         </div>
         <div class="input-group">
-            <label for="logToConsole">Log result to console</label>
+            <label for="includeZeroBorders">Include zero width borders</label>
+            <input type="checkbox" name="includeZeroBorders" id="includeZeroBorders" />
+        </div>
+        <div class="input-group">
+            <label for="logToConsole">Log result to console <small>(you get more detailed information)</small></label>
             <input type="checkbox" name="logToConsole" id="logToConsole" />
         </div>
         <div class="button-group">

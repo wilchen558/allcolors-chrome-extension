@@ -19,25 +19,12 @@ function initialiseOptions() {
     document.getElementById('logToConsole').checked = options.logToConsole;
     document.getElementById('includeZeroBorders').checked = options.includeBorderColorsWithZeroWidth;
 
-    options.props.forEach(function (element) {
-        let ul = document.getElementById("props-list");
-        let li = document.createElement("li");
-        li.appendChild(document.createTextNode(element));
-        ul.appendChild(li);
+    options.props.forEach(function (property) {
+        addProperty(property);
     });
 
-    Object.keys(options.skipColors).forEach(function (element) {
-        let ul = document.getElementById("skipColors-list");
-        let li = document.createElement("li");
-        let div = document.createElement("div");
-
-        li.dataset.color = element;
-        div.className = "color-block";
-        div.style.backgroundColor = element;
-        li.appendChild(div);
-        li.appendChild(document.createTextNode(element));
-
-        ul.appendChild(li);
+    Object.keys(options.skipColors).forEach(function (color) {
+        addSkipColor(color);
     });
 }
 
@@ -113,11 +100,28 @@ function handleResult(res) {
 
 }
 
-function addProperty() {
-    
+function addProperty(property) {
+
+    let ul = document.getElementById("props-list");
+    let li = document.createElement("li");
+    li.appendChild(document.createTextNode(property));
+    ul.appendChild(li);
+
 }
 
-function addSkipColor() {
+function addSkipColor(color) {
+
+    let ul = document.getElementById("skipColors-list");
+    let li = document.createElement("li");
+    let div = document.createElement("div");
+
+    li.dataset.color = color;
+    div.className = "color-block";
+    div.style.backgroundColor = color;
+    li.appendChild(div);
+    li.appendChild(document.createTextNode(color));
+
+    ul.appendChild(li);
 
 }
 
@@ -135,4 +139,18 @@ document.getElementById('trigger').addEventListener('click', function () {
 document.getElementById('reset').addEventListener('click', function () {
     setOptions();
     removeScript();
+})
+
+document.getElementById('add-color').addEventListener('click', function () {
+    let colorInput = document.getElementById('skipColors');
+    addSkipColor(colorInput.value);
+    colorInput.value = "";
+    setOptions();
+})
+
+document.getElementById('add-property').addEventListener('click', function () {
+    let propsInput = document.getElementById('props');
+    addProperty(propsInput.value);
+    propsInput.value = "";
+    setOptions();
 })
