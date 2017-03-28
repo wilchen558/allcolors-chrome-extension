@@ -1,10 +1,17 @@
 let options;
+let result;
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.result) {
         handleResult(request.result);
     }
 });
+
+function init() {
+    result = localStorage.getItem('allColors_result') ? JSON.parse(localStorage.getItem('allColors_result')) : false;
+    handleResult(result);
+    initialiseOptions();
+}
 
 function initialiseOptions() {
     const defaultOptions = {
@@ -42,11 +49,8 @@ function setOptions() {
     });
 
     options.skipColors = skipColors;
-
     options.includeBorderColorsWithZeroWidth = document.getElementById('includeZeroBorders').checked;
-
     options.logToConsole = document.getElementById('logToConsole').checked;
-
     localStorage.setItem('allColors_options', JSON.stringify(options));
 }
 
@@ -82,22 +86,27 @@ function execAllColor() {
 
 function handleResult(res) {
 
-    let ul = document.getElementById("result-list");
+    if (res) {
+        let ul = document.getElementById("result-list");
+        res.forEach(function (c) {
+            let li = document.createElement("li");
+            let div = document.createElement("div");
+            let p = document.createElement("p");
 
-    res.forEach(function (c) {
+            div.className = "color-block";
+            div.style.backgroundColor = c.key;
+            p.innerHTML = c.key + " " + c.hexValue + " <b>(" + c.value.count + " Times)</b>";
+
+            li.appendChild(div);
+            li.appendChild(p);
+            ul.appendChild(li);
+        });
         let li = document.createElement("li");
-        let div = document.createElement("div");
-        let p = document.createElement("p");
-
-        div.className = "color-block";
-        div.style.backgroundColor = c.key;
-        p.innerHTML = c.key + " " + c.hexValue + " <b>(" + c.value.count + " Times)</b>";
-
-        li.appendChild(div);
-        li.appendChild(p);
+        li.className = "total-colors";
+        li.innerText = "Total colors used: " + res.length;
         ul.appendChild(li);
-    });
-
+        localStorage.setItem('allColors_result', JSON.stringify(res));
+    }
 }
 
 function addProperty(property) {
@@ -124,8 +133,26 @@ function addSkipColor(color) {
     ul.appendChild(li);
 
 }
+function removeChildren(element) {
+    while (element.firstChild) {
+        element.removeChild(element.firstChild);
+    }
+}
 
-initialiseOptions();
+function reset() {
+    let resultList = document.getElementById("result-list");
+    let skipColorsList = document.getElementById("skipColors-list");
+    let propsList = document.getElementById("props-list");
+
+    removeChildren(resultList);
+    removeChildren(skipColorsList);
+    removeChildren(propsList);
+
+    localStorage.removeItem('allColors_options');
+    localStorage.removeItem('allColors_result');
+
+    removeScript();
+}
 
 document.getElementById('trigger').addEventListener('click', function () {
     setOptions();
@@ -137,8 +164,8 @@ document.getElementById('trigger').addEventListener('click', function () {
 })
 
 document.getElementById('reset').addEventListener('click', function () {
-    setOptions();
-    removeScript();
+    reset();
+    init();
 })
 
 document.getElementById('add-color').addEventListener('click', function () {
@@ -154,3 +181,5 @@ document.getElementById('add-property').addEventListener('click', function () {
     propsInput.value = "";
     setOptions();
 })
+
+init();

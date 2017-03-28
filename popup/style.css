@@ -44,7 +44,7 @@ a {
  */
 
 body {
-	width: 500px;
+	width: 400px;
 	background: rgb(245,245,245);
 }
 
@@ -109,18 +109,15 @@ select {
 
 button {
 	display: inline-block;
-
 	height: 30px;
-
 	box-shadow: 0 1px 3px 0 hsla(40,3%,45%,.35);
 	border: 0;
     border-radius: 3px;
-
     font-family: -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
 	font-size: 1.3rem;
 	font-weight: 600;
-
 	cursor: pointer;
+	width: 29%;
 }
 
 input {
@@ -138,7 +135,7 @@ input {
 
 button#trigger {
 
-	width: 67%;
+	width: 100%;
 	background: #88d039;
 	color: #fff;
 
@@ -149,7 +146,7 @@ button#trigger svg {
 }
 
 button#reset {
-	width: 30%;
+	width: 100%;
 	color: rgb(100,100,100);
 }
 
@@ -167,6 +164,10 @@ ul {
 
 li p {
 	display: inline-block;
+}
+
+li.total-colors {
+	font-weight: bold;
 }
 
 
