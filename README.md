@@ -10,11 +10,11 @@ This article on [bitsofcode](https://bitsofco.de/making-alix-a-chrome-extension-
 
 Click 'Apply' to execute the allcolors script.
 
-'Reset' resets the result and all setting (incl the local sotrage)
+'Clear' Clears the result and all settings (incl the local sotrage)
 
 ## Options
 
-The option avivable in the extension. Option are saved in local storage, so you don't need to set them again.
+The option available in the extension. Options are saved in local storage, so you don't need to set them again.
 
 ### CSS Properties
 

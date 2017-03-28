@@ -83,7 +83,16 @@ function execAllColor() {
 
 function handleResult(res) {
     if (res) {
-        let ul = document.getElementById("result-list");
+        let container = document.getElementById("result-container");
+        
+        let label = document.createElement("label");
+        label.innerText = "Result";
+
+        let ul = document.createElement("ul");
+        ul.className = "result-list";
+        
+        container.appendChild(label);
+
         res.forEach(function (c) {
             let li = document.createElement("li");
             let div = document.createElement("div");
@@ -97,10 +106,14 @@ function handleResult(res) {
             li.appendChild(p);
             ul.appendChild(li);
         });
+
         let li = document.createElement("li");
         li.className = "total-colors";
         li.innerText = "Total colors used: " + res.length;
+        
         ul.appendChild(li);
+        container.appendChild(ul);
+
         localStorage.setItem('allColors_result', JSON.stringify(res));
     }
 }
@@ -132,11 +145,11 @@ function removeChildren(element) {
 }
 
 function reset() {
-    let resultList = document.getElementById("result-list");
+    let resultContainer = document.getElementById("result-container");
     let skipColorsList = document.getElementById("skipColors-list");
     let propsList = document.getElementById("props-list");
 
-    removeChildren(resultList);
+    removeChildren(resultContainer);
     removeChildren(skipColorsList);
     removeChildren(propsList);
 
