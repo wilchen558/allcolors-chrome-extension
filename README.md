@@ -4,7 +4,9 @@ Created a chrome extension based on [bgrins allcolors.js](https://github.com/bgr
 
 Used this as a opportunity to learn how to make a chrome extension.
 
-This article on [bitsofcode](https://bitsofco.de/making-alix-a-chrome-extension-for-linting-html/) also helped me get the basic idea
+This article on [bitsofcode](https://bitsofco.de/making-alix-a-chrome-extension-for-linting-html/) also helped me get the basic idea.
+
+[Icon pack by Icons8](https://icons8.com)
 
 ## Use
 
