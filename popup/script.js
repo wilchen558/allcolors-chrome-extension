@@ -1,5 +1,4 @@
-let options;
-let result;
+let options, result;
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.result) {
@@ -25,11 +24,9 @@ function initialiseOptions() {
 
     document.getElementById('logToConsole').checked = options.logToConsole;
     document.getElementById('includeZeroBorders').checked = options.includeBorderColorsWithZeroWidth;
-
     options.props.forEach(function (property) {
         addProperty(property);
     });
-
     Object.keys(options.skipColors).forEach(function (color) {
         addSkipColor(color);
     });
@@ -85,7 +82,6 @@ function execAllColor() {
 }
 
 function handleResult(res) {
-
     if (res) {
         let ul = document.getElementById("result-list");
         res.forEach(function (c) {
@@ -110,16 +106,13 @@ function handleResult(res) {
 }
 
 function addProperty(property) {
-
     let ul = document.getElementById("props-list");
     let li = document.createElement("li");
     li.appendChild(document.createTextNode(property));
     ul.appendChild(li);
-
 }
 
 function addSkipColor(color) {
-
     let ul = document.getElementById("skipColors-list");
     let li = document.createElement("li");
     let div = document.createElement("div");
@@ -127,11 +120,10 @@ function addSkipColor(color) {
     li.dataset.color = color;
     div.className = "color-block";
     div.style.backgroundColor = color;
+
     li.appendChild(div);
     li.appendChild(document.createTextNode(color));
-
     ul.appendChild(li);
-
 }
 function removeChildren(element) {
     while (element.firstChild) {
