@@ -1,6 +1,7 @@
 // allcolors.js
 // https://github.com/bgrins/devtools-snippets
 // Print out CSS colors used in elements on the page.
+// Modifications by Tobias Wilchen (https://github.com/wilchen558)
 
 chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
@@ -9,8 +10,7 @@ chrome.runtime.onMessage.addListener(
         } else {
             console.log('Something went wrong');
         }
-});
-
+    });
 
 function execAllCorlors(settings) {
 
