@@ -121,6 +121,11 @@ function handleResult(res) {
 function addProperty(property) {
     let ul = document.getElementById("props-list");
     let li = document.createElement("li");
+
+    li.onclick = function () {
+        this.parentElement.removeChild(this);
+    };
+    li.title = "Click to remove";
     li.appendChild(document.createTextNode(property));
     ul.appendChild(li);
 }
@@ -130,6 +135,10 @@ function addSkipColor(color) {
     let li = document.createElement("li");
     let div = document.createElement("div");
 
+    li.onclick = function () {
+        this.parentElement.removeChild(this);
+    };
+    li.title = "Click to remove";
     li.dataset.color = color;
     div.className = "color-block";
     div.style.backgroundColor = color;
@@ -138,6 +147,7 @@ function addSkipColor(color) {
     li.appendChild(document.createTextNode(color));
     ul.appendChild(li);
 }
+
 function removeChildren(element) {
     while (element.firstChild) {
         element.removeChild(element.firstChild);
@@ -161,6 +171,9 @@ function reset() {
 
 document.getElementById('trigger').addEventListener('click', function () {
     setOptions();
+    let resultContainer = document.getElementById("result-container");
+    removeChildren(resultContainer);
+
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         chrome.tabs.sendMessage(tabs[0].id, { settings: options }, function (response) {
 
