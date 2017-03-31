@@ -1,3 +1,5 @@
+![All-Colors](icon.png)
+
 # Allcolors chrome extension
 
 Created a chrome extension based on [bgrins allcolors.js](https://github.com/bgrins/devtools-snippets/blob/master/snippets/allcolors/allcolors.js)
